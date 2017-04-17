@@ -146,14 +146,24 @@ tinymce.init({
     ],
     setup: function (editor) {
         editor.on('change', function (e) {
-            var content = tinymce.get('input').getContent();
-            var md = toMarkdown(content, {gfm: true});
+          var content = tinymce.get('input').getContent();
+            var md = toMarkdown(content, {
+              gfm: true,
+              converters: [{
+                filter: ['div', 'span', 'header', 'button', 'nav', 'section', 'iframe', 'footer', 'header'],
+                replacement: function (content) {
+                  return content
+                }
+              }]
+            });
             $("#output").val(md);
         });
     }
 });
 
-new Clipboard('.btn');
+$('document').ready(function () {
+  new Clipboard('.btn');
+});
 
 </script>
 </html>
