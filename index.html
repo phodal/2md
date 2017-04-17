@@ -119,32 +119,28 @@
         <div class="header">
             <button class="btn button" data-clipboard-action="cut" data-clipboard-target="#output">复制</button>
         </div>
-        <div id="output"></div>
+        <textarea id="output" rows="25" cols="50" disabled="disabled"> hello, world</textarea>
     </div>
 </div>
 </body>
 
 <script>
 tinymce.init({
-    selector: 'textarea',
+    selector: 'textarea#input',
     height: 500,
     menubar: false,
+    statusbar: false,
+    toolbar: false,
     plugins: [
         'advlist autolink lists link image charmap print preview anchor',
         'searchreplace visualblocks code fullscreen',
         'insertdatetime media table contextmenu paste code'
     ],
-    toolbar: 'code',
     setup: function (editor) {
         editor.on('change', function (e) {
             var content = tinymce.get('input').getContent();
-            var converter = {
-                filter: ['p', 'div'],
-                replacement: function (innerHTML) {
-                    return innerHTML + '<br><br>\n\n';
-                }
-            };
-            $("#output").html(toMarkdown(content, {converters: [converter], gfm: true}));
+            var md = toMarkdown(content, {gfm: true});
+            $("#output").val(md);
         });
     }
 });
