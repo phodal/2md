@@ -150,7 +150,7 @@ tinymce.init({
             var md = toMarkdown(content, {
               gfm: true,
               converters: [{
-                filter: ['div', 'span', 'header', 'button', 'nav', 'section', 'iframe', 'footer', 'header'],
+                filter: ['div', 'pre', 'span', 'header', 'button', 'nav', 'section', 'iframe', 'footer', 'header'],
                 replacement: function (content) {
                   return content
                 }
