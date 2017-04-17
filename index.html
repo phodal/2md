@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title> 2md: A Converter for Copy/Paste content to Markdown</title>
     <script src="tinymce/tinymce.min.js"></script>
+    <script src="js/clipboard.min.js"></script>
+    <script src="js/jquery-3.2.1.slim.min.js"></script>
     <style>
         * {
             box-sizing: border-box;
@@ -131,14 +133,16 @@ tinymce.init({
         'searchreplace visualblocks code fullscreen',
         'insertdatetime media table contextmenu paste code'
     ],
-    toolbar: 'code'
+    toolbar: 'code',
+    setup: function(editor) {
+        editor.on('change', function(e) {
+            var content=tinymce.get('input').getContent();
+            $("#output").html(content);
+        });
+    }
 });
 
-// Get the HTML contents of the currently active editor
-console.debug(tinymce.activeEditor);
-
-// Get the raw contents of the currently active editor
-//tinymce.activeEditor.getContent({format : 'raw'});
+new Clipboard('.btn');
 
 </script>
 </html>
