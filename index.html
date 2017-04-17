@@ -46,7 +46,7 @@
         var md = toMarkdown(content, {
           gfm: true,
           converters: [{
-            filter: ['pre', 'article', 'form', 'span', 'header', 'button', 'nav', 'section', 'iframe', 'footer', 'header'],
+            filter: ['pre', 'figure', 'figure', 'figcaption', 'form', 'span', 'header', 'button', 'nav', 'section', 'iframe', 'footer', 'header'],
             replacement: function (content) {
               return content
             }
