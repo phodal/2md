@@ -1,8 +1,20 @@
-# 2md
+# 2md: A Converter for Copy/Paste content to Markdown
 
-A Converter for Copy/Paste content to Markdown
+markdown to Wechat Public（微信公众号）: [MDPub](https://github.com/phodal/mdpub)
 
+Features：直接复制、粘贴到编程器里。
 
+Screenshots:
+
+![2md Screenshots](./marketing/2md.jpg) 
+
+Base on：
+
+ * TinyMce
+ * to-markdown.js
+ * clipboard
+
+Inspired by [to-markdown](https://github.com/domchristie/to-markdown) - A Convert from html to markdown
 
 LICENSE
 ---
