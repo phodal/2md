@@ -3,116 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title> 2md: A Converter for Copy/Paste content to Markdown</title>
+    <link rel="stylesheet" href="styles.css">
+
     <script src="tinymce/tinymce.min.js"></script>
     <script src="js/clipboard.min.js"></script>
     <script src="js/jquery-3.2.1.slim.min.js"></script>
     <script src="js/to-markdown.js"></script>
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-        body {
-            padding: 0;
-            margin: 0;
-            font-family: Helvetica, Arial, sans-serif;
-            font-size: 16px;
-            line-height: 1.5;
-            color: #50616D;
-            background-color: #eee;
-        }
-        header {
-            padding: 1em;
-            overflow: hidden;
-            background-color: #fff;
-        }
-        a {
-            color: #1e6bb8;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-        .cf:before,
-        .cf:after {
-            content: " ";
-            display: table;
-        }
-
-        .cf:after {
-            clear: both;
-        }
-
-        .cf {
-            *zoom: 1;
-        }
-        :first-child {
-            margin-top: 0;
-        }
-        .col {
-            padding: 0 10px;
-        }
-        .header {
-            height: 80px;
-            line-height: 80px;
-        }
-        .button {
-            background-color: #179ED6; /* Green */
-            border: none;
-            color: white;
-            padding: 5px 30px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-        }
-
-        .header button {
-            border-radius: 3px;
-            margin-top: 15px;
-            line-height: 30px;
-            background-color: #179ED6;
-            color: #fff;
-        }
-        @media (min-width: 768px) {
-            body {
-                font-size: 16px;
-            }
-
-            .col {
-                float: left;
-                width: 50%;
-                padding: 0 15px;
-            }
-
-            .row {
-                padding-right: 15px;
-                padding-left: 15px;
-            }
-        }
-
-        textarea {
-            width: 100%;
-            height: 600px;
-            margin: 0;
-            padding: .5em;
-            overflow: auto;
-            border: none;
-            background-color: #fff;
-            font-family: courier, monospace;
-            font-size: inherit;
-            color: inherit;
-        }
-        #output {
-            background: #fff;
-            height: 100%;
-            min-height: 100%;
-            padding: 1em;
-        }
-        #input, #output, .mce-tinymce {
-            border-radius: 3px;
-        }
-    </style>
 </head>
 <body>
 
@@ -133,37 +29,37 @@
 </body>
 
 <script>
-tinymce.init({
+  tinymce.init({
     selector: 'textarea#input',
     height: 500,
     menubar: false,
     statusbar: false,
     toolbar: false,
     plugins: [
-        'advlist autolink lists link image charmap print preview anchor',
-        'searchreplace visualblocks code fullscreen',
-        'insertdatetime media table contextmenu paste code'
+      'advlist autolink lists link image charmap print preview anchor',
+      'searchreplace visualblocks code fullscreen',
+      'insertdatetime media table contextmenu paste code'
     ],
     setup: function (editor) {
-        editor.on('change', function (e) {
-          var content = tinymce.get('input').getContent();
-            var md = toMarkdown(content, {
-              gfm: true,
-              converters: [{
-                filter: ['div', 'pre', 'article', 'form', 'span', 'header', 'button', 'nav', 'section', 'iframe', 'footer', 'header'],
-                replacement: function (content) {
-                  return content
-                }
-              }]
-            });
-            $("#output").val(md);
+      editor.on('change', function (e) {
+        var content = tinymce.get('input').getContent();
+        var md = toMarkdown(content, {
+          gfm: true,
+          converters: [{
+            filter: ['div', 'pre', 'article', 'form', 'span', 'header', 'button', 'nav', 'section', 'iframe', 'footer', 'header'],
+            replacement: function (content) {
+              return content
+            }
+          }]
         });
+        $("#output").val(md);
+      });
     }
-});
+  });
 
-$('document').ready(function () {
-  new Clipboard('.btn');
-});
+  $('document').ready(function () {
+    new Clipboard('.btn');
+  });
 
 </script>
 </html>
