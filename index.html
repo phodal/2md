@@ -127,7 +127,7 @@
         <div class="header">
             <button class="btn button" data-clipboard-action="cut" data-clipboard-target="#output">复制</button>
         </div>
-        <textarea id="output" rows="25" cols="50" disabled="disabled"> hello, world</textarea>
+        <textarea id="output" rows="25" cols="50"> hello, world</textarea>
     </div>
 </div>
 </body>
@@ -150,7 +150,7 @@ tinymce.init({
             var md = toMarkdown(content, {
               gfm: true,
               converters: [{
-                filter: ['div', 'pre', 'span', 'header', 'button', 'nav', 'section', 'iframe', 'footer', 'header'],
+                filter: ['div', 'pre', 'article', 'form', 'span', 'header', 'button', 'nav', 'section', 'iframe', 'footer', 'header'],
                 replacement: function (content) {
                   return content
                 }
