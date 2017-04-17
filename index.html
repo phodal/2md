@@ -6,6 +6,7 @@
     <script src="tinymce/tinymce.min.js"></script>
     <script src="js/clipboard.min.js"></script>
     <script src="js/jquery-3.2.1.slim.min.js"></script>
+    <script src="js/to-markdown.js"></script>
     <style>
         * {
             box-sizing: border-box;
@@ -134,10 +135,16 @@ tinymce.init({
         'insertdatetime media table contextmenu paste code'
     ],
     toolbar: 'code',
-    setup: function(editor) {
-        editor.on('change', function(e) {
-            var content=tinymce.get('input').getContent();
-            $("#output").html(content);
+    setup: function (editor) {
+        editor.on('change', function (e) {
+            var content = tinymce.get('input').getContent();
+            var converter = {
+                filter: ['p', 'div'],
+                replacement: function (innerHTML) {
+                    return innerHTML + '<br><br>\n\n';
+                }
+            };
+            $("#output").html(toMarkdown(content, {converters: [converter], gfm: true}));
         });
     }
 });
