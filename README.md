@@ -1,5 +1,7 @@
 # 2md: A Converter for Copy/Paste content to Markdown
 
+[![Markdown Improve](https://img.shields.io/badge/markdown--improve-Phodal-blue.svg)](https://github.com/phodal/markdown-improve)
+
 markdown to Wechat Public（微信公众号）: [MDPub](https://github.com/phodal/mdpub)
 
 Features：直接复制、粘贴到编程器里。
