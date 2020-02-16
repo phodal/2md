@@ -9,6 +9,7 @@
     <script src="js/clipboard.min.js"></script>
     <script src="js/jquery-3.2.1.slim.min.js"></script>
     <script src="js/to-markdown.js"></script>
+    <script src="js/turndown-plugin-gfm.js"></script>
 </head>
 <body>
 
@@ -29,48 +30,45 @@
 </body>
 
 <script>
-  tinymce.init({
-    selector: 'textarea#input',
-    height: 500,
-    menubar: false,
-    statusbar: false,
-    toolbar: ['code'],
-    plugins: [
-      'advlist autolink lists link image charmap print preview anchor',
-      'searchreplace visualblocks code fullscreen',
-      'insertdatetime media table contextmenu paste code'
-    ],
-    setup: function (editor) {
-      editor.on('change', function (e) {
-        var content = tinymce.get('input').getContent();
-        var md = toMarkdown(content, {
-          gfm: true,
-          converters: [{
-            filter: ['pre', 'figure', 'figure', 'figcaption', 'form', 'span', 'header', 'button', 'nav', 'section', 'iframe', 'footer', 'header', 'input', 'aside', 'article', 'time', 'label', 'dd', 'dl'],
-            replacement: function (content) {
-              return content
-            }
-          }, {
-            filter: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'div'],
+    tinymce.init({
+        selector: 'textarea#input',
+        height: 500,
+        menubar: false,
+        statusbar: false,
+        toolbar: ['code'],
+        plugins: [
+            'advlist autolink lists link image charmap print preview anchor',
+            'searchreplace visualblocks code fullscreen',
+            'insertdatetime media table contextmenu paste code'
+        ],
+        setup: function (editor) {
+            editor.on('change', function (e) {
+                var content = tinymce.get('input').getContent();
+                var turndownService = new TurndownService();
+                var gfm = turndownPluginGfm.gfm;
+                turndownService.use(gfm);
 
-            replacement: function(innerHTML, node) {
-              var hLevel = node.tagName.charAt(1);
-              var hPrefix = '';
-              for(var i = 0; i < hLevel; i++) {
-                hPrefix += '#';
-              }
-              return '\n' + hPrefix + ' ' + innerHTML + '\n\n';
-            }
-          }]
-        });
-        $("#output").val(md);
-      });
-    }
-  });
+                var md = turndownService.turndown(content, {
+                    converters: [{
+                        filter: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'div'],
+                        replacement: function (innerHTML, node) {
+                            var hLevel = node.tagName.charAt(1);
+                            var hPrefix = '';
+                            for (var i = 0; i < hLevel; i++) {
+                                hPrefix += '#';
+                            }
+                            return '\n' + hPrefix + ' ' + innerHTML + '\n\n';
+                        }
+                    }]
+                });
+                $("#output").val(md);
+            });
+        }
+    });
 
-  $('document').ready(function () {
-    new Clipboard('.btn');
-  });
+    $('document').ready(function () {
+        new Clipboard('.btn');
+    });
 
 </script>
 </html>
